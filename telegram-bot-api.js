@@ -34,7 +34,7 @@ TelegramBotApi = (function TelegramBotApi() {
          *
          * @see https://core.telegram.org/bots/api#making-requests Making requests
          */
-        var url = 'https://api.telegram.org/bot' + TOKEN + '1/';
+        var url = 'https://api.telegram.org/bot' + TOKEN + '/';
 
         return url;
     });
