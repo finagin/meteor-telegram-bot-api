@@ -1,7 +1,7 @@
 Package.describe({
     name: 'finagin:telegram-bot-api',
     version: '0.0.1',
-    summary: '',
+    summary: 'API service for Telegram\'s bots (https://core.telegram.org/bots)',
     git: 'https://github.com/finagin/meteor-telegram-bot-api.git',
     documentation: 'README.md'
 });
