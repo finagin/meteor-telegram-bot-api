@@ -30,7 +30,6 @@ TelegramBotApi = (function TelegramBotApi() {
          * @name TelegramBotApi.url
          * @type string
          * @this TelegramBotApi
-         * @public
          * @readonly
          *
          * @see https://core.telegram.org/bots/api#making-requests Making requests
@@ -63,7 +62,6 @@ TelegramBotApi = (function TelegramBotApi() {
          * @name TelegramBotApi.method
          * @type function
          * @this TelegramBotApi
-         * @public
          *
          * @param {string} methodName - Telegram API method
          * @param {object} [parmas]
@@ -105,8 +103,6 @@ TelegramBotApi = (function TelegramBotApi() {
         return method;
     });
 
-
-
     this.__defineGetter__('getMe', function () {
         /**
          * A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a {@link User} object.
@@ -144,7 +140,8 @@ TelegramBotApi = (function TelegramBotApi() {
      * @param {boolean} response.data.ok
      * @param {object} response.data.result
      */
-    function callbackFunction(error, response){}
+    function callbackFunction(error, response) {
+    }
 
     /**
      * User
