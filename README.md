@@ -2,9 +2,9 @@ meteor-telegram-bot-api
 =======================
 API service for Telegram's bots (https://core.telegram.org/bots)
 
-* [English](#English)
-    * [Installing](#Installing)
-    * [Setting](#Setting)
+* [English](#english)
+    * [Installing](#installing)
+    * [Setting](#setting)
 * [Русский](#Русский)
     * [Установка](#Установка)
     * [Настройка](#Настройка)
@@ -12,8 +12,8 @@ API service for Telegram's bots (https://core.telegram.org/bots)
 
 # English
 
-1. [Installing](#Installing)
-2. [Setting](#Setting)
+1. [Installing](#installing)
+2. [Setting](#setting)
 
 #### Installing
 Add the package to your project using meteorite:
