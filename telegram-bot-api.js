@@ -9,23 +9,30 @@ TelegramBot = new function TelegramBot() {
         },
         TelegramBotHandlers = {},
         protoTelegramBotApi = {
-            get getMe() {
-                function getMe(asyncCallback) {
-
-                    var argArray = [
-                            TelegramBotConsts.API_CALL_METHOD,
-                            TelegramBotConsts.API_URL + TelegramBotConsts.API_TOKEN
-                        ],
-                        response;
-
-                    if (asyncCallback) {
-                        check(asyncCallback, Function);
-
-                        argArray.push(asyncCallback);
+            get method() {
+                function method(methodNmae, params, asyncCallback) {
+                    if (!asyncCallback && typeof params == 'function') {
+                        asyncCallback = params;
+                        params = {};
                     }
 
-                    response = HTTP.call.apply(this, argArray);
+                    check(methodNmae, String);
+                    check(params, Match.Optional(Object));
+                    check(asyncCallback, Match.Optional(Function))
 
+
+                    var response,
+                        argArray = [
+                            TelegramBotConsts.API_CALL_METHOD,
+                            TelegramBotConsts.API_URL + TelegramBotConsts.API_TOKEN + methodNmae,
+                            {
+                                data: params
+                            },
+                            asyncCallback
+                        ];
+
+
+                    response = HTTP.call.apply(this, argArray);
 
                     if (TelegramBotConsts.API_CHAIN_SYNTAX) {
                         return this;
@@ -34,53 +41,59 @@ TelegramBot = new function TelegramBot() {
                     }
                 }
 
+                return method;
+            },
+            get getMe() {
+                function getMe(asyncCallback) {
+                    check(asyncCallback, Match.Optional(Function));
+
+                    var argArray = [
+                        'getMe'
+                    ];
+
+                    if (asyncCallback) {
+                        argArray.push(asyncCallback);
+                    }
+
+                    return this.method.apply(this, argArray);
+                }
+
                 return getMe;
             },
             get sendMessage() {
-                function sendMessage(chat_id, text, params) {
-                    check(chat_id, Match.OneOf(Match.Integer, String));
-                    check(text, String);
-                    check(
-                        params,
-                        Match.Optional({
-                            parse_mode: Match.Optional(
-                                Match.OneOf(
-                                    'HTML',
-                                    'Markdown'
-                                )
-                            ),
-                            disable_web_page_preview: Match.Optional(Boolean),
-                            reply_to_message_id: Match.Optional(Match.Integer),
-                            reply_markup: Match.Optional(
-                                Match.OneOf({
-                                    keyboard: [[String]],
-                                    resize_keyboard: Match.Optional(Boolean),
-                                    one_time_keyboard: Match.Optional(Boolean),
-                                    selective: Match.Optional(Boolean)
-                                })
+                function sendMessage(params, asyncCallback){
+                    check(params, {
+                        chet_id: Match.OneOf(Match.Integer, String),
+                        text: String,
+                        parse_mode:Match.Optional(
+                            Match.OneOf(
+                                'HTML',
+                                'Markdown'
                             )
-                        })
-                    );
+                        ),
+                        disable_web_page_preview: Match.Optional(Boolean),
+                        reply_to_message_id: Match.Optional(Match.Integer),
+                        reply_markup: Match.Optional(
+                            Match.OneOf({
+                                keyboard: [[String]],
+                                resize_keyboard: Match.Optional(Boolean),
+                                one_time_keyboard: Match.Optional(Boolean),
+                                selective: Match.Optional(Boolean)
+                            })
+                        )
+                    });
+                    check(asyncCallback, Match.Optional(Function));
 
                     var argArray = [
-                            TelegramBotConsts.API_CALL_METHOD,
-                            TelegramBotConsts.API_URL + TelegramBotConsts.API_TOKEN + '/sendMessage',
-                            {
-                                data: {
-                                    chat_id: chat_id,
-                                    text: text
-                                }
-                            }
-                        ],
-                        response;
+                        'sendMessage',
+                        params
+                    ];
 
-                    response = HTTP.call.apply(this, argArray);
-
-                    if (TelegramBotConsts.API_CHAIN_SYNTAX) {
-                        return this;
-                    } else {
-                        return response;
+                    if (asyncCallback) {
+                        argArray.push(asyncCallback);
                     }
+
+                    return this.method.apply(this, argArray);
                 }
 
                 return sendMessage;
